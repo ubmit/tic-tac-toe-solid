@@ -1,4 +1,4 @@
-import { createSignal, type Component, Show, createEffect } from "solid-js";
+import { createSignal, type Component } from "solid-js";
 import styles from "./App.module.css";
 
 type Square = "X" | "O" | null;
@@ -9,13 +9,11 @@ const WINNING_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
-
   [0, 3, 6],
   [1, 4, 7],
   [2, 5, 8],
-
   [0, 4, 8],
-  [2, 4, 2],
+  [6, 4, 2],
 ];
 
 function calculateWinner(squares: Square[]) {
@@ -50,7 +48,7 @@ const App: Component = () => {
   let gameStatus = () => calculateStatus(squares(), winner(), currentPlayer());
 
   function handleClick(id: number) {
-    if (winner() || squares().every(Boolean) || squares()[id] !== null) return;
+    if (winner() || squares()[id]) return;
 
     let newSquares = squares().map((square, index) => {
       return id === index ? currentPlayer() : square;
@@ -59,17 +57,39 @@ const App: Component = () => {
     setSquares(newSquares);
   }
 
+  function restart() {
+    setSquares(INITIAL_STATE);
+  }
+
+  function renderSquare(index: number) {
+    return (
+      <div class={styles.square} onClick={() => handleClick(index)}>
+        {squares()[index]}
+      </div>
+    );
+  }
+
   return (
     <main class={styles.container}>
       <span>{gameStatus()}</span>
-      <div class={styles.board}>
-        {squares().map((square, index) => (
-          <div onClick={() => handleClick(index)} class={styles.square}>
-            {square !== null ? square : ""}
-          </div>
-        ))}
+      <div>
+        <div class={styles.boardRow}>
+          {renderSquare(0)}
+          {renderSquare(1)}
+          {renderSquare(2)}
+        </div>
+        <div class={styles.boardRow}>
+          {renderSquare(3)}
+          {renderSquare(4)}
+          {renderSquare(5)}
+        </div>
+        <div class={styles.boardRow}>
+          {renderSquare(6)}
+          {renderSquare(7)}
+          {renderSquare(8)}
+        </div>
       </div>
-      <button onClick={() => setSquares(INITIAL_STATE)}>reset</button>
+      <button onClick={restart}>restart</button>
     </main>
   );
 };
