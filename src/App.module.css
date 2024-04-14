@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+
+  min-height: 100lvh;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.square {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+
+  border: 1px solid #000;
+  margin: 1px;
+}
