@@ -61,37 +61,48 @@ const App: Component = () => {
     setSquares(INITIAL_STATE);
   }
 
+  return (
+    <main class={styles.container}>
+      <span>{gameStatus()}</span>
+      <Board squares={squares()} handleClick={handleClick} />
+      <button onClick={restart}>restart</button>
+    </main>
+  );
+};
+
+type BoardProps = {
+  squares: Square[];
+  handleClick: (index: number) => void;
+};
+
+function Board({ squares, handleClick }: BoardProps) {
   function renderSquare(index: number) {
     return (
       <div class={styles.square} onClick={() => handleClick(index)}>
-        {squares()[index]}
+        {squares[index]}
       </div>
     );
   }
 
   return (
-    <main class={styles.container}>
-      <span>{gameStatus()}</span>
-      <div>
-        <div class={styles.boardRow}>
-          {renderSquare(0)}
-          {renderSquare(1)}
-          {renderSquare(2)}
-        </div>
-        <div class={styles.boardRow}>
-          {renderSquare(3)}
-          {renderSquare(4)}
-          {renderSquare(5)}
-        </div>
-        <div class={styles.boardRow}>
-          {renderSquare(6)}
-          {renderSquare(7)}
-          {renderSquare(8)}
-        </div>
+    <div>
+      <div class={styles.boardRow}>
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       </div>
-      <button onClick={restart}>restart</button>
-    </main>
+      <div class={styles.boardRow}>
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+      </div>
+      <div class={styles.boardRow}>
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
+      </div>
+    </div>
   );
-};
+}
 
 export default App;
