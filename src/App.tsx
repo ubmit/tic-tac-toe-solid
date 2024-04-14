@@ -75,11 +75,11 @@ type BoardProps = {
   handleClick: (index: number) => void;
 };
 
-function Board({ squares, handleClick }: BoardProps) {
+function Board(props: BoardProps) {
   function renderSquare(index: number) {
     return (
-      <div class={styles.square} onClick={() => handleClick(index)}>
-        {squares[index]}
+      <div class={styles.square} onClick={() => props.handleClick(index)}>
+        {props.squares[index]}
       </div>
     );
   }
